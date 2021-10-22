@@ -5,7 +5,7 @@ __pycache__/
 
 # non-critical scripts and notebooks
 credentials.py
-create_database.ipybb
+
 
 # C extensions
 *.so
