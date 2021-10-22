@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# non-critical scripts and notebooks
+credentials.py
+create_database.ipybb
+
 # C extensions
 *.so
 
