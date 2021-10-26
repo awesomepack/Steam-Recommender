@@ -10,7 +10,9 @@ We will use ML(scikit learn), pandas, postgress, and visualization using Tableau
 
 ## Data
 
- Used a [scraper found on Github](https://github.com/nik-davis/steam-data-science-project) to collect data from both the Steam and Steamspy APIs on 10/22/2021
+ Used a modified version of a [scraper found on Github](https://github.com/nik-davis/steam-data-science-project) to collect data from both the Steam and Steamspy APIs on 10/22/2021
+
+The data can be found [here](https://www.dropbox.com/sh/w11p1f0q3wr1el3/AAADSXS2Znz-EBehVpXSNDNMa?dl=0)
 
 <details>
   <summary>Data Summary</summary>
@@ -35,12 +37,5 @@ We will use ML(scikit learn), pandas, postgress, and visualization using Tableau
 | **genre** | *String* | SteamSpy | List of genres |
 | **ccu** | *integer* | SteamSpy | Peak concurrent users in the previous day |
 | **tags** | *JSON* | SteamSpy | Game's tags with vote counts |
-TODO: Finish Steam data elements
-
-unused columns:
-developer
-publisher
-score_rank (too few values)
-userscore (too few values)
 
 </details>
