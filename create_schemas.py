@@ -22,10 +22,10 @@ from credentials import password , user_name
 
 
 # Download steam_data_clean.csv as df
-steam_data_df = pd.read_csv('Resources/steam_data_clean.csv')
+steam_data_df = pd.read_csv('../../steam_data_clean.csv')
 
 # Download steamspy_data_clean.csv as df
-steamspy_df = pd.read_csv('Resources/steamspy_data_clean.csv')
+steamspy_df = pd.read_csv('../../steamspy_data_clean.csv') # data/file.csv
 
 # Connect to PostgreSQL using Pscopg2
 postgresEngine = create_engine(f'postgresql+psycopg2://{user_name}:{password}@localhost/Steam_Recommender' , echo = True)
@@ -35,8 +35,13 @@ if not database_exists(postgresEngine.url):
     create_database(postgresEngine.url)
 
 # Load steam_data_df into Steam_Recommender database
-steam_data_df.to_sql('Steam_Data'  , postgresEngine , if_exists= 'replace'  )
+steam_data_df.to_sql('Steam_Data'  , postgresEngine , if_exists= 'replace' , index = False  )
 
 # Load steamspy_df into Postgres
-steamspy_df.to_sql('Steamspy_Data'  , postgresEngine , if_exists= 'replace'  )
+steamspy_df.to_sql('Steamspy_Data'  , postgresEngine , if_exists= 'replace' , index = False )
+
+with postgresEngine.connect() as con:
+    con.execute('ALTER TABLE "Steam_Data" ADD PRIMARY KEY ("steam_appid");\
+    ALTER TABLE "Steamspy_Data" ADD PRIMARY KEY ("appid");')
+
     

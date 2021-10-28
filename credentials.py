@@ -1,2 +1,2 @@
-user_name = '<Postgres user name'
-password = '<Postgres Password'
+user_name = 'user'
+password = 'Pword'
