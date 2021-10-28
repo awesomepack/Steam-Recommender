@@ -8,6 +8,8 @@ Using this data we will apply ML to predict whether a game will be successful or
 We will then use Tableau to demonstrate our results.
 We will use ML(scikit learn), pandas, postgress, and visualization using Tableau.
 
+Tableu link: https://public.tableau.com/app/profile/aidan.lucero/viz/final-steam-data/Story1?publish=yes
+
 ## Data
 
  Used a modified version of a [scraper found on Github](https://github.com/nik-davis/steam-data-science-project) to collect data from both the Steam and Steamspy APIs on 10/22/2021
@@ -39,3 +41,5 @@ The data can be found [here](https://www.dropbox.com/sh/w11p1f0q3wr1el3/AAADSXS2
 | **tags** | *JSON* | SteamSpy | Game's tags with vote counts |
 
 </details>
+
+
