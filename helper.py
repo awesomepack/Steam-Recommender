@@ -12,12 +12,10 @@ from sqlalchemy import join
 from sqlalchemy.sql import select
 
 
-def model_data(UserName , PassWord ):
-
-   
+def get_all():
 
     # Connect to the Steam_Recommender Database using UserName and PassWord
-    postgresEngine = create_engine(f'postgresql+psycopg2://{UserName}:{PassWord}@localhost:5432/Steam_Recommender')
+    postgresEngine = create_engine(f'postgresql+psycopg2://{user_name}:{password}@localhost:5432/Steam_Recommender')
 
     # Establish auotmap base
     Base = automap_base(bind = postgresEngine)
@@ -26,16 +24,19 @@ def model_data(UserName , PassWord ):
     Base.prepare( postgresEngine , reflect = True)
 
     # Pass the target tables to variables
-    SteamData = Base.classes.Steam_Data
-    SteamSpy = Base.classes.Steamspy_Data
+    SteamData = Base.classes.steam_data_clean
+    SteamSpy = Base.classes.steamspy_data_clean
+    AppList = Base.classes.app_list
 
     # Open session with postgresEngine
     session = Session(postgresEngine)
 
     # join SteamData and SteamSpy using SQL Alchemy
-    query = session.query(SteamData , SteamSpy).join(SteamSpy, SteamData.steam_appid == SteamSpy.appid)
+    query = session.query(SteamData , SteamSpy, AppList)\
+                        .join(SteamSpy, SteamData.appid == SteamSpy.appid)\
+                        .join(AppList, SteamData.appid == AppList.appid)\
     
     # Transform query results into DF
-    df = pd.read_sql(query.statement , session.bind)
+    df = pd.read_sql(query.statement , session.bind).drop(columns = ['appid_1', 'appid_2'])
 
     return df
