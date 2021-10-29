@@ -42,94 +42,15 @@ The data can be found [here](https://www.dropbox.com/sh/w11p1f0q3wr1el3/AAADSXS2
 
 ## Machine Learning 
 
-Attempt 1: 
+In this section we applied machine learning after preprocessing the data on the ratio column to predict which games would succeed or rather have a better positive to negative review ratio.
 
-We combined data from steam and steamspy (steamspy being another dataset with a focus on user averages and reviews separated into positive and negative columns). 
+- At the start of this part of the project we experienced several issues with our data being too big/messy resulting in extremely large dummy data and as such our results produced extremely low accuracy scores after training (ranging around 0.046)
 
-We thought the data was cleaned and when combined and dummied the data became too big. 
-We also noticed that the column for supported_language in the steam data had issues regarding how languages or groups of languages were labeled creating an error when initializing standardscaler.
+- After fixing an issue with the columns being unable to be trained and preproccessing the data again we were able to produced a better accuracy score ranging around 40-60% 
 
-Attempt 2A: 
+- Eventually we were able to clean up our data further by dropping more columns, applying filters, creating bins, and creating a function to deal with the columns with lists. This in turn allowed us to achieve an accuracy score of 80%
 
-- This attempt is dropping supported_languages along with other columns in the preprocessing step. 
-
-- Result: Failed
-
-Attempt 2B: 
-
-- Filtering supported_languages and grouping all occurrences of languages that occur less than 100 amount into an  “Other” category.
-
-- Result: It failed as a similar Error occurred where string could not be converted to float
-
-
-Attempt 3: 
-
-- Filtered supported_languages, genres, and categories column and dummied them
-
-- Realized that the original columns were still there and that was what cause the previous errors so the originals were dropped from the merge steam df
-
-- Dropped owners column 
-
-- Result: Code runs. Accuracy is low plateauing at around 0.046 which is extremely low. Data now has to be preprocessed further. 
-
-Attempt 4: 
-
-- Dropped [‘owners’, ‘average_2weeks’,’average_forever’,’median_2weeks’,’median_forever’]
-
-- Added 2 more layers (5 total)
-
-- Result: Accuracy ended up being the same as Attempt 3. 
-
-Attempt 5: 
-
-- Dropped ['required_age','supported_languages','developers','publishers','achievements','linux','mac','windows','date','owners','average_forever','average_2weeks','median_forever','median_2weeks','ccu','name']
-
-- Created a new column called ratio(positive/negative reviews)
-
-- Applied bins to ratio column (‘very bad’, ‘bad’, ‘below average’, ‘average’, and ‘good’)
-
-- Created code to help dummy the columns with list 
-
-- Realized that the original columns [‘supported_languages’, ‘genres’, ‘categories’] still remained in the new dataframe and dropped them. This fixed the error (‘String could not be converted to float’)
-
-- Dummied the remaining columns and focused on the binned ratio column. Labeled as y_columns
-
-- Created layers with one being a dropout layer
-
-- Set (n2.compile(loss="mse", optimizer="adam", metrics=["accuracy"]))
-
-- Trained model and produced accuracy of 0.42
-
-Final Cleanup:
-
-- Code now connect to postgres with help from helpers.py 
-
-- Code is more polished with alot of unncessary code and comments removed from previous attempts. 
-
-- dropcolumns = ['required_age','supported_languages','developers','publishers','achievements','linux','mac','windows','date','owners','average_forever','average_2weeks','median_forever','median_2weeks','ccu','name']
-
-- Filtered out rows for column ‘Coming soon”
-
-- Filtered out rows that did not have enough data to do predictions with 
-
-- Bin ratio column and create bin based on results
-
-- Convert columns with list to dummy
-
-- Dummy remaining columns 
-
-- Train test split
-
-- Standardscaler
-
-- Use a ColumnTransformer so we don't have to pass the dummy columns into the scale
-
-- Neural networks: 
-
-- 5 Dense layers with first four being ‘relu’ and the last being sigmoid
-- The sixth layer is a dropout layer
-
-- Result: Accuracy score is .80 or 80% accurate
+- Result of Final Code: Accuracy score is .80 
 
 
 
