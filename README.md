@@ -104,6 +104,8 @@ Final Cleanup:
 
 - Code now connect to postgres with help from helpers.py 
 
+- Code is more polished with alot of unncessary code and comments removed from previous attempts. 
+
 - dropcolumns = ['required_age','supported_languages','developers','publishers','achievements','linux','mac','windows','date','owners','average_forever','average_2weeks','median_forever','median_2weeks','ccu','name']
 
 - Filtered out rows for column ‘Coming soon”
