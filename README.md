@@ -7,21 +7,136 @@ Train a basic neural network on the data available from [Steam's own API](https:
 Before beginning, visualize the data several ways to try and eyeball if there are clusters or related variables.
 [Tableu](https://public.tableau.com/app/profile/aidan.lucero/viz/final-steam-data/Story1?publish=yes)
 
+# Data Storage
+
 ## Data
 
  Used a modified version of a [scraper found on Github](https://github.com/nik-davis/steam-data-science-project) to collect data from both the Steam and Steamspy APIs on 10/22/2021
 
 The data can be found [here](https://www.dropbox.com/sh/w11p1f0q3wr1el3/AAADSXS2Znz-EBehVpXSNDNMa?dl=0)
 
+## PostgreSQL
+
+The use of a relational database management system (PostgreSQL) was chosen to host our data because the structure was pre-defined by our API source. Since the number of records does not exceed a million records storing the dataset in the cloud was overwritten.
+
+## Database Scripts
+
+### [create_schemas.py](create_schemas.py)
+
+Uses sqlAlchemy version 1.4.7 to:
+
+* Initialize user's local instance of PostgreSQL with database `Steam_Recommender`
+* Creates and populates Tables in `Steam_Recommender` by looping through the files in a datafolder
+  * Default datafolder is `./data`
+  * Tables primary key expected to be `appid`
+
+### Data Feed
+
+`helper.py` defines the `get_all()` function merges tables steam_data_clean , steamspy_data_clean , and  app_list into a dataframe for cleaning and feeding into our model.
+
+# Machine Learning
+
+## [Jupyter Notebook](ratings_ratio_predictions.ipynb)
+
+In this section we applied machine learning after preprocessing the data on the ratio column to predict which games would succeed or rather have a better positive to negative review ratio.
+
+* At the start of this part of the project we experienced several issues with our data being too big/messy resulting in extremely large dummy data and as such our results produced extremely low accuracy scores after training
+
+* After fixing an issue with the columns being unable to be trained and preproccessing the data again we were able to produced a better accuracy score
+
+* Eventually we were able to clean up our data further by dropping more columns, applying filters, creating bins, and creating a function to deal with the columns with lists. This allowed us to achieve an even greater accuracy.
+
+# Data Summary
+
 <details>
-  <summary>Data Summary</summary>
+  <summary>App List</summary>
 
 | Column Name | DataType | Source | Description |
 | --- | --- | --- | --- |
 | **appid** | *integer* | both | Identifier for game |
 | **name** | *string* | both | Name of game |
+
+</details>
+
+<details>
+  <summary>Steam Data</summary>
+
+| Column Name | DataType | Source | Description |
+| --- | --- | --- | --- |
+| **appid** | *integer* | both | Identifier for game |
+| **required_age** | *integer* | Steam | Minimum age the game is appropriate for based on ESRB recommendations |
+| **supported_languages** | *string Array* | Steam | List of supported languages |
 | **developers** | *string Array* | Steam | Company(s) that developed the game |
 | **publishers** | *string Array* | Steam | Company(s) that published the game |
+| **categories** | --- | Steam | --- |
+| **genres** | --- | Steam | --- |
+| **achievements** | --- | Steam | --- |
+| **linux** | --- | Steam | --- |
+| **mac** | --- | Steam | --- |
+| **windows** | --- | Steam | --- |
+| **price** | --- | Steam | --- |
+| **coming_soon** | --- | Steam | --- |
+| **date** | --- | Steam | --- |
+
+</details>
+
+<details>
+  <summary>Steam Description</summary>
+
+| Column Name | DataType | Source | Description |
+| --- | --- | --- | --- |
+| **appid** | *integer* | both | Identifier for game |
+| **detailed_description** | *String* | Steam | Full description of the game |
+| **about_the_game** | *String* | Steam | Short description of the game |
+| **short_description** | *String* | Steam | First 350 characters of **detailed_description** |
+
+</details>
+
+<details>
+  <summary>Steam Media</summary>
+
+| Column Name | DataType | Source | Description |
+| --- | --- | --- | --- |
+| **appid** | *integer* | both | Identifier for game |
+| **header_image** | *string* | Steam | --- |
+| **screenshots** | *JSON* | Steam | --- |
+| **background** | *string* | Steam | --- |
+| **movies** | *JSON* | Steam | --- |
+
+</details>
+
+<details>
+  <summary>Steam Requirements</summary>
+
+| Column Name | DataType | Source | Description |
+| --- | --- | --- | --- |
+| **appid** | *integer* | both | Identifier for game |
+| **pc_requirements** | *JSON* | Steam | --- |
+| **mac_requirements** | *JSON* | Steam | --- |
+| **linux_requirements** | *JSON* | Steam | --- |
+| **minimum** | *String* | Steam | --- |
+| **recommended** | *String* | Steam | --- |
+
+</details>
+
+<details>
+  <summary>Steam Support Info</summary>
+
+| Column Name | DataType | Source | Description |
+| --- | --- | --- | --- |
+| **appid** | *integer* | both | Identifier for game |
+| **website** | *string* | Steam | --- |
+| **support_url** | *string* | Steam | --- |
+| **support_email** | *string* | Steam | --- |
+
+</details>
+
+<details>
+  <summary>Steamspy Data</summary>
+
+| Column Name | DataType | Source | Description |
+| --- | --- | --- | --- |
+| **appid** | *integer* | both | Identifier for game |
 | **positive** | *integer* | SteamSpy | Count of positive reviews on Steam |
 | **negative** | *integer* | SteamSpy | Count of negative reviews on Steam |
 | **owners** | *String* | SteamSpy | Integer range of total purchases for the game on Steam |
@@ -38,33 +153,3 @@ The data can be found [here](https://www.dropbox.com/sh/w11p1f0q3wr1el3/AAADSXS2
 | **tags** | *JSON* | SteamSpy | Game's tags with vote counts |
 
 </details>
-
-## Data Storage
-
-### PostgreSQL
-The use of a relational database management system (PostgreSQL) was chosen to host our data because the structure was pre-defined by our API source. Since the number of records does not exceed a million records storing the dataset in the cloud was overwritten.
-
-### Database Creation
-create_schemas.py uses sqlAlchemy version 1.4.7 to:
-* initialize user's local instance of PostgreSQL with database "Steam_Recommender"
-* Defines the make_table function
-* Creates Table objects in "Steam_Recommender" by looping through the files in datafolder
-* The primary key for all tables is the "appid" except for the metacritic table
-
-### Data Feed
-helper.py defines the get_all() function merges tables steam_data_clean , steamspy_data_clean , and  app_list into a dataframe for cleaning and feeding into our model.
-
-## Machine Learning 
-
-In this section we applied machine learning after preprocessing the data on the ratio column to predict which games would succeed or rather have a better positive to negative review ratio.
-
-- At the start of this part of the project we experienced several issues with our data being too big/messy resulting in extremely large dummy data and as such our results produced extremely low accuracy scores after training (ranging around 0.046)
-
-- After fixing an issue with the columns being unable to be trained and preproccessing the data again we were able to produced a better accuracy score ranging around 40-60% 
-
-- Eventually we were able to clean up our data further by dropping more columns, applying filters, creating bins, and creating a function to deal with the columns with lists. This in turn allowed us to achieve an accuracy score of 80%
-
-- Result of Final Code: Accuracy score is .80 
-
-
-
