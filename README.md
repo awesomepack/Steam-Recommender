@@ -39,6 +39,20 @@ The data can be found [here](https://www.dropbox.com/sh/w11p1f0q3wr1el3/AAADSXS2
 
 </details>
 
+## Data Storage
+
+### PostgreSQL
+The use of a relational database management system (PostgreSQL) was chosen to host our data because the structure was pre-defined by our API source. Since the number of records does not exceed a million records storing the dataset in the cloud was overwritten.
+
+### Database Creation
+create_schemas.py uses sqlAlchemy version 1.4.7 to:
+* initialize user's local instance of PostgreSQL with database "Steam_Recommender"
+* Defines the make_table function
+* Creates Table objects in "Steam_Recommender" by looping through the files in datafolder
+* The primary key for all tables is the "appid" except for the metacritic table
+
+### Data Feed
+helper.py defines the get_all() function merges tables steam_data_clean , steamspy_data_clean , and  app_list into a dataframe for cleaning and feeding into our model.
 
 ## Machine Learning 
 
