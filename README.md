@@ -1,14 +1,11 @@
-# Steam-Recommender
+# Steam Review Predictor
 
-Recommend new video games based of user data and other users with similar tastes
+Train a basic neural network on the data available from [Steam's own API](https://partner.steamgames.com/doc/webapi) and [steamspy API](https://steamspy.com/api.php) - an API service that stores data compiled from more complicated queries to Steam's API - and come up with predictions on whether games will have received mostly positive or negative reviews overall.  
 
-Our group will make a model that will take data and predict whether a game will do well. It
-will use STEAMSPY API as a data source. We will scrape data from the STEAMSPY API such as critic score, game sales, genre, system requirements, tags for multiplayer, etc.
-Using this data we will apply ML to predict whether a game will be successful or not as determine by either scores or sales.
-We will then use Tableau to demonstrate our results.
-We will use ML(scikit learn), pandas, postgress, and visualization using Tableau.
+## Data review
 
-Tableu link: https://public.tableau.com/app/profile/aidan.lucero/viz/final-steam-data/Story1?publish=yes
+Before beginning, visualize the data several ways to try and eyeball if there are clusters or related variables.
+[Tableu](https://public.tableau.com/app/profile/aidan.lucero/viz/final-steam-data/Story1?publish=yes)
 
 ## Data
 
@@ -41,5 +38,3 @@ The data can be found [here](https://www.dropbox.com/sh/w11p1f0q3wr1el3/AAADSXS2
 | **tags** | *JSON* | SteamSpy | Game's tags with vote counts |
 
 </details>
-
-
