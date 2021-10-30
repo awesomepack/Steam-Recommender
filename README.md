@@ -59,18 +59,18 @@ In this section we applied machine learning after preprocessing the data on the 
 | --- | --- | --- | --- |
 | **appid** | *integer* | both | Identifier for game |
 | **required_age** | *integer* | Steam | Minimum age the game is appropriate for based on ESRB recommendations |
-| **supported_languages** | *string Array* | Steam | List of supported languages |
-| **developers** | *string Array* | Steam | Company(s) that developed the game |
-| **publishers** | *string Array* | Steam | Company(s) that published the game |
-| **categories** | --- | Steam | --- |
-| **genres** | --- | Steam | --- |
-| **achievements** | --- | Steam | --- |
-| **linux** | --- | Steam | --- |
-| **mac** | --- | Steam | --- |
-| **windows** | --- | Steam | --- |
-| **price** | --- | Steam | --- |
-| **coming_soon** | --- | Steam | --- |
-| **date** | --- | Steam | --- |
+| **supported_languages** | *string array* | Steam | List of supported languages |
+| **developers** | *string array* | Steam | Company(s) that developed the game |
+| **publishers** | *string array* | Steam | Company(s) that published the game |
+| **categories** | *string array* | Steam | List of categories the game belongs to |
+| **genres** | *string array* | Steam | List of genres the game belongs to |
+| **achievements** | *integer* | Steam | Count of achievements available in the game |
+| **linux** | *integer* | Steam | 1 if the game has Linux support, 0 otherwise |
+| **mac** | *integer* | Steam | 1 if the game has MacOS support, 0 otherwise |
+| **windows** | *integer* | Steam | 1 if the game has Windows support, 0 otherwise |
+| **price** | *integer* | Steam | Price in US Cents to buy the game |
+| **coming_soon** | *boolean* | Steam | Flag for if the game is coming soon |
+| **date** | *date* | Steam | Release date |
 
 </details>
 
@@ -80,9 +80,9 @@ In this section we applied machine learning after preprocessing the data on the 
 | Column Name | DataType | Source | Description |
 | --- | --- | --- | --- |
 | **appid** | *integer* | both | Identifier for game |
-| **detailed_description** | *String* | Steam | Full description of the game |
-| **about_the_game** | *String* | Steam | Short description of the game |
-| **short_description** | *String* | Steam | First 350 characters of **detailed_description** |
+| **detailed_description** | *string* | Steam | Full description of the game |
+| **about_the_game** | *string* | Steam | Short description of the game |
+| **short_description** | *string* | Steam | First 350 characters of **detailed_description** |
 
 </details>
 
@@ -92,10 +92,10 @@ In this section we applied machine learning after preprocessing the data on the 
 | Column Name | DataType | Source | Description |
 | --- | --- | --- | --- |
 | **appid** | *integer* | both | Identifier for game |
-| **header_image** | *string* | Steam | --- |
-| **screenshots** | *JSON* | Steam | --- |
-| **background** | *string* | Steam | --- |
-| **movies** | *JSON* | Steam | --- |
+| **header_image** | *string* | Steam | URL of image to use for the header image |
+| **screenshots** | *JSON* | Steam | Set of IDs and URLs for screenshots |
+| **background** | *string* | Steam | URL of image to use for the background image |
+| **movies** | *JSON* | Steam | Set of IDs and URLs for movies |
 
 </details>
 
@@ -108,8 +108,8 @@ In this section we applied machine learning after preprocessing the data on the 
 | **pc_requirements** | *JSON* | Steam | --- |
 | **mac_requirements** | *JSON* | Steam | --- |
 | **linux_requirements** | *JSON* | Steam | --- |
-| **minimum** | *String* | Steam | --- |
-| **recommended** | *String* | Steam | --- |
+| **minimum** | *string* | Steam | --- |
+| **recommended** | *string* | Steam | --- |
 
 </details>
 
@@ -133,7 +133,7 @@ In this section we applied machine learning after preprocessing the data on the 
 | **appid** | *integer* | both | Identifier for game |
 | **positive** | *integer* | SteamSpy | Count of positive reviews on Steam |
 | **negative** | *integer* | SteamSpy | Count of negative reviews on Steam |
-| **owners** | *String* | SteamSpy | Integer range of total purchases for the game on Steam |
+| **owners** | *string* | SteamSpy | Integer range of total purchases for the game on Steam |
 | **average_forever** | *integer* | SteamSpy | Average playtime since March 2009, in minutes |
 | **average_2weeks** | *integer* | SteamSpy | Average playtime in the last two weeks, in minutes |
 | **median_forever** | *integer* | SteamSpy | Median playtime since March 2009, in minutes |
@@ -141,8 +141,8 @@ In this section we applied machine learning after preprocessing the data on the 
 | **price** | *integer* | SteamSpy | Current US price in cents |
 | **initialprice** | *integer* | SteamSpy | Original US price in cents |
 | **discount** | *integer* | SteamSpy | Current discount in percents |
-| **languages** | *String* | SteamSpy | List of supported languages |
-| **genre** | *String* | SteamSpy | List of genres |
+| **languages** | *string* | SteamSpy | List of supported languages |
+| **genre** | *string* | SteamSpy | List of genres |
 | **ccu** | *integer* | SteamSpy | Peak concurrent users in the previous day |
 | **tags** | *JSON* | SteamSpy | Game's tags with vote counts |
 
